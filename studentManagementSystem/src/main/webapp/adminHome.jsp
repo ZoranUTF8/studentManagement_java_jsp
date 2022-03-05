@@ -4,8 +4,9 @@
 <title>University</title>
 <body>
 <img src="logo.png"  align="left"width="100" height="100">
-<center><img src="dgi.png" width="100" height="100">
-<img src="nova.jpg" align="right"  width="100" height="100"></center>
+<!-- CHANGE PIC LATER -->
+<center><img src="uni.jpg" width="100" height="100">
+</center>
 <div class="w3-container">
   <div class="w3-bar w3-black">
     <button class="w3-bar-item w3-button tablink w3-red" onclick="openCity(event,'London')">Add New Student</button>
@@ -149,60 +150,60 @@
                     <div class="card">
                         <div class="card-header">Insert New Result</div>
                         <div class="card-body">
-                            <form name="my-form" onsubmit="return validform()" action="success.php" method="">
+                            <form name="my-form" onsubmit="return validform()" action="insertNewResult.jsp" method="">
                                 <div class="form-group row">
                                     <label for="full_name" class="col-md-4 col-form-label text-md-right">Roll Number</label>
                                     <div class="col-md-6">
-                                        <input type="text"class="form-control" name="">
+                                        <input type="text"class="form-control" name="rollNum">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="email_address" class="col-md-4 col-form-label text-md-right">Engg. Physics-I</label>
                                     <div class="col-md-6">
-                                        <input type="text"  class="form-control" name="">
+                                        <input type="text"  class="form-control" name="s1">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="user_name" class="col-md-4 col-form-label text-md-right">Engg. Chemistry</label>
                                     <div class="col-md-6">
-                                        <input type="text"  class="form-control" name="">
+                                        <input type="text"  class="form-control" name="s2">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="phone_number" class="col-md-4 col-form-label text-md-right">Engg. Mathematics-I</label>
                                     <div class="col-md-6">
-                                        <input type="text"  class="form-control" name="">
+                                        <input type="text"  class="form-control" name="s3">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="present_address" class="col-md-4 col-form-label text-md-right">Basic Electrical Engg</label>
                                     <div class="col-md-6">
-                                        <input type="text"  class="form-control" name="">
+                                        <input type="text"  class="form-control" name="s4">
                                     </div>
                                 </div>
 
                                 <div class="form-group row">
                                     <label for="permanent_address" class="col-md-4 col-form-label text-md-right">Electronic Engg.</label>
                                     <div class="col-md-6">
-                                        <input type="text"  class="form-control" name="">
+                                        <input type="text"  class="form-control" name="s5">
                                     </div>
                                 </div>
                                 
                                  <div class="form-group row">
                                     <label for="permanent_address" class="col-md-4 col-form-label text-md-right">Engg. Chemistry Lab</label>
                                     <div class="col-md-6">
-                                        <input type="text"  class="form-control" name="">
+                                        <input type="text"  class="form-control" name="s6">
                                     </div>
                                 </div>
                                 
                                  <div class="form-group row">
                                     <label for="permanent_address" class="col-md-4 col-form-label text-md-right">Engg. Physics Lab</label>
                                     <div class="col-md-6">
-                                        <input type="text" class="form-control" name="">
+                                        <input type="text" class="form-control" name="s7">
                                     </div>
                                 </div>
                                 
@@ -247,30 +248,58 @@
       </thead>
     </table>
   </div>
+  
   <div class="tbl-content">
     <table cellpadding="0" cellspacing="0" border="0">
       <tbody>
+      <!-- IMPORTS -->
+      <%@page import="java.sql.*" %>
+      <%@page import="MySqlConnection.ConnectionProvider"%>
+      
+      <!-- Get connection -->
+      
+      <% try {
+    	  Connection con = ConnectionProvider.getCon();
+    	  
+    	  Statement st = con.createStatement();
+    	  
+    	  ResultSet rs = st.executeQuery("SELECT * FROM student.student");
+    	  
+    	  while(rs.next()){
+    		  
+    	  
+     
+      %>
         <tr>
-          <td>B.Tech</td>
-          <td>CS</td>
-          <td>40234</td>
-          <td>Zoran Janjic</td>
-          <td>Zdravko Janjic</td>
-          <td>Male</td>
+          <td><%= rs.getString(1) %></td>
+          <td><%= rs.getString(2) %></td>
+          <td><%= rs.getString(3) %></td>
+          <td><%= rs.getString(4) %></td>
+          <td><%= rs.getString(5) %></td>
+          <td><%= rs.getString(6) %></td>
         </tr>
 
       </tbody>
+      
+      <%}}
+      catch(Exception e){
+    	  System.out.print("Error in listing student details: "+e.getLocalizedMessage());
+      }
+      %>
     </table>
   </div>
 </section>
 </div>
+
 <div id="Tokyo1" class="w3-container w3-border city" style="display:none">
-   
 <section>
+
   <!--for demo wrap-->
   <div class="tbl-header">
     <table cellpadding="0" cellspacing="0" border="0">
+    
       <thead>
+      
         <tr>
           <th>Roll Number</th>
           <th>Engg. Physics-I</th>
@@ -286,17 +315,42 @@
   </div>
   <div class="tbl-content">
     <table cellpadding="0" cellspacing="0" border="0">
+    
       <tbody>
+      <!-- IMPORTS -->
+      <%@page import="java.sql.*" %>
+      <%@page import="MySqlConnection.ConnectionProvider"%>
+      
+      <!-- Get connection -->
+      
+      <% try {
+    	  Connection con = ConnectionProvider.getCon();
+    	  
+    	  Statement st = con.createStatement();
+    	  
+    	  ResultSet rs = st.executeQuery("SELECT * FROM student.result");
+    	  
+
+    	  
+    	  while(rs.next()){
+      %>
+      
         <tr>
-          <td>10025</td>
-          <td>70</td>
-          <td>80</td>
-          <td>90</td>
-          <td>50</td>
-          <td>56</td>
-          <td>25</td>
-          <td>25</td>
+          <td><%= rs.getString(1) %></td>
+          <td><%= rs.getString(2) %></td>
+          <td><%= rs.getString(3) %></td>
+          <td><%= rs.getString(4) %></td>
+          <td><%= rs.getString(5) %></td>
+          <td><%= rs.getString(6) %></td>
+          <td><%= rs.getString(7) %></td>
+          <td><%= rs.getString(8) %></td>
+          
         </tr>
+        <%}}
+      catch(Exception e){
+    	  System.out.print("Error in connecting to db: "+e.getLocalizedMessage());
+      }
+      %>
       </tbody>
     </table>
   </div>
